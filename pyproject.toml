@@ -1,0 +1,33 @@
+[build-system]
+requires = ["flit_core<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "simple_flask"
+version = "1.0.0"
+description = "The basic blog app built in the Flask tutorial."
+requires-python = ">=3.7"
+dependencies = [
+    "Flask>=2.2,<3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7,<8",
+    "flake8>=4,<5",
+    "black>=22.6.0",
+    "mypy>=0.961,<1",
+]
+
+[tool.setuptools.package-data]
+"*" = ["**/static/**/*", "**/templates/**/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.black]
+line-length = 88
+
+[tool.mypy]
+ignore_missing_imports = true
+files = "simple_flask,tests"
