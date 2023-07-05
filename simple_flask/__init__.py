@@ -1,4 +1,5 @@
 import logging.config
+import os
 
 from flask import Flask
 
@@ -28,12 +29,21 @@ def configure_logging():
 
 def create_app(config_overrides=None):
     configure_logging()  # should be configured before any access to app.logger
-    app = Flask(__name__)
-    app.config.from_object("simple_flask.default_settings")
-    app.config.from_prefixed_env()
+    app = Flask(__name__, instance_relative_config=True)
+    app.config.from_mapping(
+        SECRET_KEY="dev",
+        DATABASE=os.path.join(app.instance_path, "simple_flask.sqlite")
+    )
 
     if config_overrides is not None:
         app.config.from_mapping(config_overrides)
+    else:
+        app.config.from_pyfile("default_settings.py", silent=True)
+
+    try:
+        os.makedirs(app.instance_path)
+    except OSError:
+        pass
 
     app.register_blueprint(views.bp)
 
