@@ -47,4 +47,7 @@ def create_app(config_overrides=None):
 
     app.register_blueprint(views.bp)
 
+    from . import db
+    db.init_app(app)
+
     return app
