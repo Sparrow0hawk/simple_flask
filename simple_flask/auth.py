@@ -1,4 +1,5 @@
 import functools
+from flask import current_app as app
 
 from typing import Union
 
@@ -35,6 +36,7 @@ def register() -> Union[str, Response]:
                     (username, generate_password_hash(password)),
                 )
                 db.commit()
+                app.logger.info(f"{username} has been registered as a user.")
             except db.IntegrityError:
                 error = f"User {username} is already registered."
             else:
@@ -67,6 +69,7 @@ def login() -> Union[str, Response]:
         if error is None:
             session.clear()
             session["user_id"] = user["id"]
+            app.logger.info(f"{username} has logged in.")
             return redirect(url_for("index"))
         
         flash(error)
@@ -89,6 +92,7 @@ def load_logged_in_user() -> None:
 
 @bp.route("/logout")
 def logout() -> Response:
+    app.logger.info(f"{session['user_id']} has logged out.")
     session.clear()
     return redirect(url_for("index"))
 
