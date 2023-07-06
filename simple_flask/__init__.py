@@ -2,6 +2,7 @@ import logging.config
 import os
 
 from flask import Flask
+from flask_bootstrap import Bootstrap5
 
 from simple_flask import views
 
@@ -30,6 +31,7 @@ def configure_logging():
 def create_app(config_overrides=None):
     configure_logging()  # should be configured before any access to app.logger
     app = Flask(__name__, instance_relative_config=True)
+    bootstrap = Bootstrap5(app)
     app.config.from_mapping(
         SECRET_KEY="dev",
         DATABASE=os.path.join(app.instance_path, "simple_flask.sqlite")

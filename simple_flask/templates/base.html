@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <title>{% block title %}{% endblock title %} - Simple Flask</title>
-<link rel="stylesheet" href="{{url_for('static', filename='style.css') }}">
-<nav>
+
+<head>
+    {{ bootstrap.load_css() }}
+</head>
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
     <h1>Simple Flask</h1>
-    <ul>
-        {% if g.user %}
-        <li>
-            <span>{{ g.user['username'] }}</span>
-        </li>
-        <li>
-            <a href="{{url_for('auth.logout') }}">Log Out</a>
-        </li>
-        {% else %}
-        <li><a href=" {{url_for('auth.register') }}"> Register</a></li>
-        <li><a href=" {{url_for('auth.login') }}">Log In</a></li>
-        {% endif %}
-    </ul>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            {% if g.user %}
+            <li class="nav-link">
+                <span>{{ g.user['username'] }}</span>
+            </li>
+            <li class="nav-link">
+                <a href="{{url_for('auth.logout') }}">Log Out</a>
+            </li>
+            {% else %}
+            <li class="nav-link"><a href=" {{url_for('auth.register') }}"> Register</a></li>
+            <li class="nav-link"><a href=" {{url_for('auth.login') }}">Log In</a></li>
+            {% endif %}
+        </ul>
+    </div>
 </nav>
-<section class="content">
+<section class="content container">
     <header>
         {% block header %}{% endblock %}
     </header>
