@@ -4,8 +4,6 @@ import os
 from flask import Flask
 from flask_bootstrap import Bootstrap5
 
-from simple_flask import views
-
 
 def configure_logging():
     logging.config.dictConfig(
@@ -47,12 +45,12 @@ def create_app(config_overrides=None):
     except OSError:
         pass
 
-    app.register_blueprint(views.bp)
-
     from . import db
     db.init_app(app)
 
-    from . import auth
+    from . import auth, blog
     app.register_blueprint(auth.bp)
+    app.register_blueprint(blog.bp)
+    app.add_url_rule("/", endpoint="index")
 
     return app
