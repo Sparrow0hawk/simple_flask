@@ -2,16 +2,13 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
 
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
-
 from werkzeug.exceptions import abort 
 
 from flask import current_app as app
 
 from simple_flask.auth import login_required
 from simple_flask.db import get_db
+from .forms import CreatePostForm
 
 bp = Blueprint("blog", __name__)
 
@@ -57,8 +54,3 @@ def create():
         
     return render_template("blog/create.html", form=form)
 
-
-class CreatePostForm(FlaskForm):
-    title = StringField("title", validators=[DataRequired()])
-    body = StringField("body", validators=[DataRequired()])
-    submit = SubmitField()
