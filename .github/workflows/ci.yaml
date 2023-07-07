@@ -21,8 +21,8 @@ jobs:
                 python-version: ${{ matrix.python-version }}
             - name: Install dependencies
               run: |
-                python -m pip3 install --upgrade pip
-                pip3 install .
+                python -m pip install --upgrade pip
+                pip install .
 
     test:
         needs: build
@@ -39,7 +39,7 @@ jobs:
               python-version: ${{ matrix.python-version }}
           - name: Install dependencies
             run: |
-              pip3 install pytest-cov
+              pip install pytest-cov
           - name: Build coverage file
             shell: bash -l {0}
             if: matrix.python-version == '3.11'
