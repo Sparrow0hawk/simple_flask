@@ -29,7 +29,6 @@ def index():
 def create():
     form = CreatePostForm()
     if form.validate_on_submit():
-        flash("Form validated!")
         title = form.title.data
         body = form.body.data
 
