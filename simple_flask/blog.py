@@ -24,6 +24,12 @@ def index():
     return render_template("blog/index.html", posts=posts)
 
 
+@bp.route("/healthcheck")
+def healthcheck():
+    app.logger.info("Healthcheck ping")
+    return "OK"
+
+
 @bp.route("/create", methods=("GET", "POST"))
 @login_required
 def create():
