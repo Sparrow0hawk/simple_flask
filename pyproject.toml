@@ -19,6 +19,8 @@ dev = [
     "flake8>=4,<5",
     "black>=22.6.0",
     "mypy>=0.961,<1",
+    "pytest",
+    "coverage"
 ]
 
 [tool.setuptools.package-data]
