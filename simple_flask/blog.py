@@ -76,7 +76,7 @@ def get_post(id, check_author=True):
 def update(id):
     post = get_post(id)
     print(post['title'])
-    edit_form = EditPostForm()
+    edit_form = EditPostForm(data={"title" : post["title"], "body": post["body"]})
     delete_form = DeletePostForm()
 
     if edit_form.validate_on_submit():
