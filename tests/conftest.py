@@ -1,7 +1,7 @@
 import os
 import tempfile
 
-import pytest 
+import pytest
 
 from typing import Generator, Any
 from flask import Flask
@@ -18,10 +18,12 @@ with open(os.path.join(os.path.dirname(__file__), "data.sql"), "rb") as f:
 def app() -> Generator[Flask, Any, Any]:
     db_fnd, db_path = tempfile.mkstemp()
 
-    app = create_app({
-        "TESTING": True,
-        "DATABASE": db_path,
-    })
+    app = create_app(
+        {
+            "TESTING": True,
+            "DATABASE": db_path,
+        }
+    )
 
     with app.app_context():
         init_db()
