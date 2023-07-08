@@ -18,12 +18,7 @@ with open(os.path.join(os.path.dirname(__file__), "data.sql"), "rb") as f:
 def app() -> Generator[Flask, Any, Any]:
     db_fnd, db_path = tempfile.mkstemp()
 
-    app = create_app(
-        {
-            "TESTING": True,
-            "DATABASE": db_path,
-        }
-    )
+    app = create_app({"TESTING": True, "DATABASE": db_path, "WTF_CSRF_ENABLED": False})
 
     with app.app_context():
         init_db()
