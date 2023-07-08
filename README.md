@@ -1,20 +1,66 @@
-# simple_flask
+[![Flask CI/CD](https://github.com/Sparrow0hawk/simple_flask/actions/workflows/ci.yaml/badge.svg)](https://github.com/Sparrow0hawk/simple_flask/actions/workflows/ci.yaml)
+# Simple Flask
 
-simple_flask description
+A simple flask application following from the [Flask
+Tutorial](https://flask.palletsprojects.com/en/2.3.x/tutorial/) with a couple of
+addition/deviations. 
+
+## Basic stack
+
+- Flask
+- Flask-Bootstrap for Bootstrap5
+- Sqlite3 for database
+- Flask WTForms
 
 ## Quick Start
 
-Run the application:
+To get started you should clone this repository and create a virtual
+environment:
 
-    make run
+```bash
+git clone https://github.com/Sparrow0hawk/simple_flask
+
+cd simple_flask
+
+python -m venv venv
+```
+
+Activate the virtual environment and install this project and it's dependencies:
+
+```bash
+. venv/bin/activate
+
+pip install .
+
+# to install with dev dependencies
+pip install .[dev]
+```
+
+With the project installed you can run the following command to initialise the
+sqlite3 database:
+
+```bash
+flask --app simple_flask init-db
+```
+
+This will return `Initializing database.` if all is well and from there you can
+run the application with the flask development server via:
+
+```bash
+flask --app simple_flask run --debug
+```
 
 And open it in the browser at [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
 
 ## Prerequisites
 
-Python >=3.7
+- Python >=3.9
 
 ## Development environment
+
+This repository was created from a [cookie-cutter
+template](https://github.com/candidtim/cookiecutter-flask-minimal) that includes
+a Makefile with the following commands:
 
  - `make venv`: creates a virtualenv with dependencies and this application
    installed (latter is installed in [development mode](http://setuptools.readthedocs.io/en/latest/setuptools.html#development-mode))
@@ -40,22 +86,3 @@ Python >=3.7
  - to modify configuration, pass it in environment variables prefixed with
    `FLASK_`; e.g., `FLASK_DEBUG`, etc.;
 
-## Configuration
-
-Default configuration is loaded from `simple_flask.default_settings` and can be
-overriden by environment variables with a `FLASK_` prefix. See
-[Configuring from Environment Variables](https://flask.palletsprojects.com/en/2.1.x/config/#configuring-from-environment-variables).
-
-Consider using
-[dotenv](https://flask.palletsprojects.com/en/2.1.x/cli/#environment-variables-from-dotenv).
-
-## Deployment
-
-See [Deploying to Production](https://flask.palletsprojects.com/en/2.1.x/deploying/).
-
-You may use the distribution (`make dist`) to publish it to a package index,
-deliver to your server, or copy in your `Dockerfile`, and insall it with `pip`.
-
-You must set a
-[SECRET_KEY](https://flask.palletsprojects.com/en/2.1.x/tutorial/deploy/#configure-the-secret-key)
-in production to a secret and stable value.
