@@ -36,7 +36,9 @@ jobs:
             with:
               python-version: ${{ matrix.python-version }}
               cache: "pip"
-          - name: Install dependencies
+          - name: Install package in dev mode
+            run: pip install .[dev]
+          - name: Install Pytest coverage
             run: |
               pip install pytest-cov
           - name: Build coverage file
@@ -64,7 +66,9 @@ jobs:
               with:
                 python-version: "3.11"
                 cache: "pip"
-            - name: Build coverage file
+            - name: Install package in dev mode
+              run: pip install .[dev]
+            - name: Run mypy
               shell: bash -l {0}
               run: |
                 mypy simple_flask
