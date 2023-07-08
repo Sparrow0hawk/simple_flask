@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, g, redirect, render_template, request, url_for
+from flask import Blueprint, flash, g, redirect, render_template, url_for
 
 from werkzeug.exceptions import abort
 
@@ -36,23 +36,14 @@ def create():
         title = form.title.data
         body = form.body.data
 
-        error = None
-
-        if not title:
-            error = "Title is required"
-
-        if error is not None:
-            flash(error)
-
-        else:
-            db = get_db()
-            db.execute(
-                "INSERT INTO post (title, body, author_id)" " VALUES (?, ?, ?)",
-                (title, body, g.user["id"]),
-            )
-            db.commit()
-            app.logger.info(f"{g.user['id']} created new post.")
-            return redirect(url_for("blog.index"))
+        db = get_db()
+        db.execute(
+            "INSERT INTO post (title, body, author_id)" " VALUES (?, ?, ?)",
+            (title, body, g.user["id"]),
+        )
+        db.commit()
+        app.logger.info(f"{g.user['id']} created new post.")
+        return redirect(url_for("blog.index"))
 
     return render_template("blog/create.html", form=form)
 
