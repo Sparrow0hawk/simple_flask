@@ -15,10 +15,10 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=7,<8",
-    "flake8>=4,<5",
+    "pytest>=7",
+    "flake8>=6",
     "black>=22.6.0",
-    "mypy>=0.961,<1",
+    "mypy>=1.4.0",
     "pytest",
     "coverage"
 ]
