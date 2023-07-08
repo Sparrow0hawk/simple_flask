@@ -11,8 +11,9 @@ class CreatePostForm(FlaskForm):
 
 class EditPostForm(CreatePostForm):
     submit = SubmitField("Save")
- 
-    
+
+
 class DeletePostForm(FlaskForm):
-    delete = SubmitField("Delete",
-                        render_kw={"onclick": "return confirm('Are you sure?')"})
+    delete = SubmitField(
+        "Delete", render_kw={"onclick": "return confirm('Are you sure?')"}
+    )

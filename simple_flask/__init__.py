@@ -32,7 +32,7 @@ def create_app(config_overrides=None):
     bootstrap = Bootstrap5(app)
     app.config.from_mapping(
         SECRET_KEY="dev",
-        DATABASE=os.path.join(app.instance_path, "simple_flask.sqlite")
+        DATABASE=os.path.join(app.instance_path, "simple_flask.sqlite"),
     )
 
     if config_overrides is not None:
@@ -46,9 +46,11 @@ def create_app(config_overrides=None):
         pass
 
     from . import db
+
     db.init_app(app)
 
     from . import auth, blog
+
     app.register_blueprint(auth.bp)
     app.register_blueprint(blog.bp)
     app.add_url_rule("/", endpoint="index")

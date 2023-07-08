@@ -7,8 +7,7 @@ from flask import current_app, g, Flask
 def get_db() -> sqlite3.Connection:
     if "db" not in g:
         g.db = sqlite3.connect(
-            current_app.config["DATABASE"], 
-            detect_types=sqlite3.PARSE_DECLTYPES
+            current_app.config["DATABASE"], detect_types=sqlite3.PARSE_DECLTYPES
         )
         g.db.row_factory = sqlite3.Row
 
@@ -33,9 +32,8 @@ def init_db() -> None:
 def init_db_command() -> None:
     init_db()
     click.echo("Initializing database.")
-    
+
 
 def init_app(app: Flask):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
-

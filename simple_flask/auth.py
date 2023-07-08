@@ -4,7 +4,14 @@ from flask import current_app as app
 from typing import Union
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint,
+    flash,
+    g,
+    redirect,
+    render_template,
+    request,
+    session,
+    url_for,
 )
 
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -41,7 +48,7 @@ def register() -> Union[str, Response]:
                 error = f"User {username} is already registered."
             else:
                 return redirect(url_for("auth.login"))
-            
+
         flash(error)
 
     return render_template("auth/register.html")
@@ -57,8 +64,7 @@ def login() -> Union[str, Response]:
         error = None
 
         user = db.execute(
-            "SELECT * FROM user WHERE username = ?",
-            (username,)
+            "SELECT * FROM user WHERE username = ?", (username,)
         ).fetchone()
 
         if user is None:
@@ -71,7 +77,7 @@ def login() -> Union[str, Response]:
             session["user_id"] = user["id"]
             app.logger.info(f"{username} has logged in.")
             return redirect(url_for("index"))
-        
+
         flash(error)
 
     return render_template("auth/login.html")
@@ -84,10 +90,9 @@ def load_logged_in_user() -> None:
     if user_id is None:
         g.user = None
     else:
-        g.user = get_db().execute(
-            "SELECT * FROM user WHERE id = ?",
-            (user_id,)
-        ).fetchone()
+        g.user = (
+            get_db().execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
+        )
 
 
 @bp.route("/logout")
@@ -102,7 +107,7 @@ def login_required(view):
     def wrapped_view(**kwargs):
         if g.user is None:
             return redirect(url_for("auth.login"))
-        
+
         return view(**kwargs)
 
     return wrapped_view
