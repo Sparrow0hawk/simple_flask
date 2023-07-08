@@ -1,5 +1,7 @@
 import sqlite3
 
+from typing import BinaryIO
+
 import click
 from flask import current_app, g, Flask
 
@@ -24,8 +26,12 @@ def close_db(e=None) -> None:
 def init_db() -> None:
     db = get_db()
 
-    with current_app.open_resource("schema.sql") as f:
-        db.executescript(f.read().decode("utf-8"))
+    current_app: Flask
+    f: BinaryIO
+
+    with current_app.open_resource("schema.sql", mode="rb") as f:
+        f_bytes = f.read()
+        db.executescript(f_bytes.decode("utf-8"))
 
 
 @click.command("init-db")
