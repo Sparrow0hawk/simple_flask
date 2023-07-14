@@ -1,5 +1,8 @@
 name: Flask CI/CD
 
+permissions:
+  pull-requests: write
+
 on:
     push:
         branches: [ "main" ]
