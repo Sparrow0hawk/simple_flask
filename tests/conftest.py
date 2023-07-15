@@ -1,6 +1,10 @@
 import os
 import tempfile
 
+import multiprocessing
+import platform
+import socket
+
 import pytest
 
 from typing import Generator, Any
@@ -12,6 +16,10 @@ from simple_flask.db import get_db, init_db
 
 with open(os.path.join(os.path.dirname(__file__), "data.sql"), "rb") as f:
     _data_sql = f.read().decode("utf-8")
+
+# force 'fork' on macOS
+if platform.system() == "Darwin":
+    multiprocessing.set_start_method("fork")
 
 
 @pytest.fixture
@@ -28,6 +36,29 @@ def app() -> Generator[Flask, Any, Any]:
 
     os.close(db_fnd)
     os.unlink(db_path)
+
+
+@pytest.fixture
+def spawn_app(app):
+    # logic for getting random port
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.bind(("127.0.0.1", 0))
+    port = sock.getsockname()[1]
+    sock.close()
+
+    proc = multiprocessing.Process(
+        target=app.run,
+        kwargs={
+            "port": port,
+            "host": "127.0.0.1",
+            "use_reloader": False,
+            "threaded": True,
+        },
+        daemon=True,
+    )
+    proc.start()
+    yield port
+    proc.kill()
 
 
 @pytest.fixture
