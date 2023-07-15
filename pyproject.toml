@@ -20,7 +20,9 @@ dev = [
     "black>=22.6.0",
     "mypy>=1.4.0",
     "pytest",
-    "coverage"
+    "coverage",
+    "requests",
+    "types-requests"
 ]
 
 [tool.setuptools.package-data]
