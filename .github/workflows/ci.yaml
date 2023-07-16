@@ -75,3 +75,12 @@ jobs:
               shell: bash -l {0}
               run: |
                 mypy simple_flask
+    docker:
+      needs: test
+      runs-on: ubuntu-latest
+      steps:
+        - name: Build and push
+          uses: docker/build-push-action@v4
+          with:
+            context: .
+            tags: simple_flask:${{ github.sha }}
