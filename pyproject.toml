@@ -25,6 +25,10 @@ dev = [
     "types-requests"
 ]
 
+prod = [
+    "gunicorn"
+]
+
 [tool.setuptools.package-data]
 "*" = ["**/static/**/*", "**/templates/**/*"]
 
