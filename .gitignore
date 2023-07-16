@@ -10,3 +10,6 @@ dist/
 .mypy_cache/
 
 instance
+
+# coverage
+.coverage
