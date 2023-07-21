@@ -76,6 +76,9 @@ jobs:
               run: |
                 mypy simple_flask
     docker:
+      permissions:
+        contents: 'read'
+        id-token: 'write'
       needs: test
       runs-on: ubuntu-latest
       steps:
