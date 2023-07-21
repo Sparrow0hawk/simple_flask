@@ -102,5 +102,5 @@ jobs:
           uses: docker/build-push-action@v4
           with:
             context: .
-            tags: europe-west1-docker.pkg.dev/sparrow0hawk-flask-app-deploy/sparrow0hawk-flask-app-deploy-ecr/simple-flask:${{ github.sha }}
+            tags: europe-west1-docker.pkg.dev/sparrow0hawk-flask-app-deploy/sparrow0hawk-flask-app-deploy-ecr/simple-flask:latest
             push: true
