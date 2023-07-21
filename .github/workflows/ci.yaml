@@ -80,8 +80,24 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v3
+        - id: auth
+          name: Authenticate with Google Cloud
+          uses: google-github-actions/auth@v0
+          with:
+            token_format: access_token
+            workload_identity_provider: ${{ secrets.PROVIDER_NAME }}
+            service_account: ${{ secrets.SA_EMAIL }}
+
+        - name: Login to Artifact Registry
+          uses: docker/login-action@v1
+          with:
+            registry: europe-west1-docker.pkg.dev
+            username: oauth2accesstoken
+            password: ${{ steps.auth.outputs.access_token }}
+
         - name: Build and push
           uses: docker/build-push-action@v4
           with:
             context: .
-            tags: simple_flask:${{ github.sha }}
+            tags: europe-west1-docker.pkg.dev/sparrow0hawk-flask-app-deploy/sparrow0hawk-flask-app-deploy-ecr/simple-flask:${{ github.sha }}
+            push: true
